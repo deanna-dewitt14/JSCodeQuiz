@@ -1,0 +1,92 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: sans-serif;
+  background-color: #f9fbfd;
+}
+
+.card {
+  background-color: hsl(0, 0%, 100%);
+  border: 2px solid black;
+  border-radius: 5px;
+  color: hsl(206, 17%, 28%);
+  font-size: 18px;
+  text-align: center;
+  margin: 1rem;
+  padding: 1rem 1rem;
+  position: relative;
+}
+
+header {
+  color: black;
+}
+#highscore {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  border: none;
+  background-color: inherit;
+  color: fuchsia;
+}
+
+#timer {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+h1 {
+  margin-top: 5rem;
+}
+
+.card-prompt {
+  font-size: small;
+  font-weight: normal;
+}
+
+.card-body {
+}
+
+.card-footer {
+
+}
+
+.btn {
+  border: none;
+  font-size: 1rem;
+  background-color: darkslateblue;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 2rem;
+  color: white;
+}
+
+@media (max-width: 690px) {
+  .btn {
+    font-size: 1rem;
+    margin: 16px 0px 0px 0px;
+    padding: 10px 15px;
+  }
+
+  #password {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .btn {
+    font-size: 0.8rem;
+  }
+}
