@@ -1,26 +1,26 @@
 //Create Timer Logic
 
-var start = Date.now();
-var timer = 100;
-console.log("Date.now: " + start);
+var start = Date.now(); //Grab init time
+var timer = 100; //Set timer countdown
+var questionValidation = true; //Flag for whether question is right/wrong
+var startBtn = document.querySelector("#startButton"); //Grab Start Button
+var timerHTML = document.querySelector("#timer"); //Grab Timer HTML
 
-setInterval(function() {
-  timer--;
-  console.log("Timer: " + timer);
+//Start timer on Start click & move to next card
+startBtn.addEventListener("click", function() {
+  setInterval(function() {
+    timer--;
+    if (!questionValidation) {
+      timer = timer - 10;
+      questionValidation = true;
+    }
+    if (timer <= 0) {
+      //GOTO FINISH PAGE
+    }
+    timerHTML.innerHTML = "Time: " + timer;
+  }, 1000);
+});
 
-  //Add trigger to start on quiz start
-
-  //Add logic to subtract time when validation fails
-  //Flag that last question was wrong, subract 10 from timer, reset the flag
-
-  //Add if timer equals zero, cut to Finish Screen
-
-  //Display Timer on HTML
-
-}, 1000);
-
-
-//Create HighScore Card and Logic
 
 //Create 5 Question Cards
 
@@ -30,3 +30,6 @@ setInterval(function() {
 
 //Create Validation to check answer
   //Create Map of Questions and Answers
+
+//Create HighScore Card and Logic
+  //log high score even after refresh
