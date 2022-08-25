@@ -1,10 +1,19 @@
-//Create Timer Logic
-
+//VARIABLES
 var start = Date.now(); //Grab init time
 var timer = 100; //Set timer countdown
 var questionValidation = true; //Flag for whether question is right/wrong
 var startBtn = document.querySelector("#startButton"); //Grab Start Button
-var timerHTML = document.querySelector("#timer"); //Grab Timer HTML
+var cardTimer = document.querySelector("#timer"); //Grab Timer HTML
+var cardQuestion = document.querySelector("#cardQuestion"); //Grab element to populate questions
+var cardAnswers = document.querySelectorAll(".answer");
+var cardAnswer1 = document.querySelector("#answer1");
+var cardAnswer2 = document.querySelector("#answer2");
+var cardAnswer3 = document.querySelector("#answer3");
+var cardAnswer4 = document.querySelector("#answer4");
+var cardPrompt = document.querySelector(".card-prompt"); //Grab element to toggle additional displayed text
+var cardInput = document.querySelector(".card-input"); //Grab element to populate buttons
+var cardFooter = document.querySelector(".card-footer"); //Grab element to populate validation result
+var currentQuestion = 0; //Pointer to current question
 var questionsAndAnswers = [
   question0 = ['Commonly used data types DO NOT include:', 'Strings', 'Booleans', 'Alerts', 'Numbers'],
   question1 = ['Arrays in Javascript can be used to store:', 'Numbers & Strings', 'Other Arrays', 'Booleans', 'All of the Above'],
@@ -20,8 +29,19 @@ var answerSheet = {
   question4: 3
 }
 
+//EVENT LISTENERS
+startBtn.addEventListener("click", startQuiz());
+cardAnswer1.addEventListener("click", validateAnswer());
+cardAnswer2.addEventListener("click", validateAnswer());
+cardAnswer3.addEventListener("click", validateAnswer());
+cardAnswer4.addEventListener("click", validateAnswer());
+
+//FUNCTIONS
 //Start timer on Start click & move to next card
-startBtn.addEventListener("click", function() {
+function startQuiz() {
+  cardPrompt.style.display = "none";
+  startBtn.style.display = "none";
+  askAQuestion();
   setInterval(function() {
     timer--;
     if (!questionValidation) {
@@ -31,12 +51,20 @@ startBtn.addEventListener("click", function() {
     if (timer <= 0) {
       //GOTO FINISH PAGE
     }
-    timerHTML.innerHTML = "Time: " + timer;
+    cardTimer.innerHTML = "Time: " + timer;
   }, 1000);
-});
+};
 
 function askAQuestion () {
+  cardQuestion.innerHTML = questionsAndAnswers[currentQuestion][0];
+  cardAnswer1.innerHTML = questionsAndAnswers[currentQuestion][1];
+  cardAnswer2.innerHTML = questionsAndAnswers[currentQuestion][2];
+  cardAnswer3.innerHTML = questionsAndAnswers[currentQuestion][3];
+  cardAnswer4.innerHTML = questionsAndAnswers[currentQuestion][4];
 
+  cardAnswers.forEach(element => {
+    element.style.display = "initial";
+  });
 
 
 }

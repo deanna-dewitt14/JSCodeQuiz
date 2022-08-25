@@ -55,11 +55,11 @@ h1 {
   font-weight: normal;
 }
 
-.card-body {
-}
-
-.card-footer {
-
+.card-input {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
 }
 
 .btn {
@@ -71,6 +71,10 @@ h1 {
   cursor: pointer;
   font-size: 2rem;
   color: white;
+}
+
+.answer {
+  display: none;
 }
 
 @media (max-width: 690px) {
