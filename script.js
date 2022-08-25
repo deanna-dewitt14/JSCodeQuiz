@@ -13,6 +13,8 @@ var cardAnswer4 = document.querySelector("#answer4");
 var cardPrompt = document.querySelector(".card-prompt"); //Grab element to toggle additional displayed text
 var cardInput = document.querySelector(".card-input"); //Grab element to populate buttons
 var cardFooter = document.querySelector(".card-footer"); //Grab element to populate validation result
+var successMessage = document.querySelector("#success");
+var failMessage = document.querySelector("#fail");
 var currentQuestion = 0; //Pointer to current question
 var questionsAndAnswers = [
   question0 = ['Commonly used data types DO NOT include:', 'Strings', 'Booleans', 'Alerts', 'Numbers'],
@@ -31,10 +33,10 @@ var answerSheet = {
 
 //EVENT LISTENERS
 startBtn.addEventListener("click", startQuiz());
-cardAnswer1.addEventListener("click", validateAnswer());
-cardAnswer2.addEventListener("click", validateAnswer());
-cardAnswer3.addEventListener("click", validateAnswer());
-cardAnswer4.addEventListener("click", validateAnswer());
+cardAnswer1.addEventListener("click", validateAnswer(1));
+cardAnswer2.addEventListener("click", validateAnswer(2));
+cardAnswer3.addEventListener("click", validateAnswer(3));
+cardAnswer4.addEventListener("click", validateAnswer(4));
 
 //FUNCTIONS
 //Start timer on Start click & move to next card
@@ -65,8 +67,22 @@ function askAQuestion () {
   cardAnswers.forEach(element => {
     element.style.display = "initial";
   });
+}
 
-
+function validateAnswer(answer) {
+  if (answerSheet[currentQuestion] == answer) {
+    failMessage.style.display = "none";
+    successMessage.style.display = "initial";
+  } else {
+    successMessage.style.display = "none";
+    failMessage.style.display = "initial";
+  }
+  currentQuestion++;
+  if(currentQuestion < questionsAndAnswers.length()) {
+    askAQuestion();
+  } else {
+    //GOTO FINISH PAGE
+  }
 }
 //Create 5 Question Cards
 

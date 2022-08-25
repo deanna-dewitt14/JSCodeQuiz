@@ -77,6 +77,19 @@ h1 {
   display: none;
 }
 
+.card-footer {
+  font-size: 2rem;
+  color: gray;
+  border-top: 2px gray solid;
+  margin: 2rem 5rem 0rem 5rem;
+}
+
+message {
+  top: 5px;
+  position: relative;
+  display: none;
+}
+
 @media (max-width: 690px) {
   .btn {
     font-size: 1rem;
