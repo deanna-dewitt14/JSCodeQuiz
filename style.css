@@ -52,7 +52,6 @@ h1 {
 
 .card-prompt {
   font-size: small;
-  font-weight: normal;
 }
 
 .card-input {
@@ -74,6 +73,18 @@ h1 {
 }
 
 .answer {
+  display: none;
+}
+
+#enterInitials {
+  display: none;
+}
+
+#restart {
+  display: none;
+}
+
+#clear {
   display: none;
 }
 

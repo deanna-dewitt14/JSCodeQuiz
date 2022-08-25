@@ -1,5 +1,6 @@
 //VARIABLES
 var start = Date.now(); //Grab init time
+var score = 0;
 var timer = 100; //Set timer countdown
 var questionValidation = true; //Flag for whether question is right/wrong
 var startBtn = document.querySelector("#startButton"); //Grab Start Button
@@ -10,9 +11,15 @@ var cardAnswer1 = document.querySelector("#answer1");
 var cardAnswer2 = document.querySelector("#answer2");
 var cardAnswer3 = document.querySelector("#answer3");
 var cardAnswer4 = document.querySelector("#answer4");
+var restart = document.querySelector("#restart");
+var clearHighscores = document.querySelector("#clear");
 var cardPrompt = document.querySelector(".card-prompt"); //Grab element to toggle additional displayed text
 var cardInput = document.querySelector(".card-input"); //Grab element to populate buttons
 var cardFooter = document.querySelector(".card-footer"); //Grab element to populate validation result
+var enterInitials = document.querySelector("#enterInitials");
+var initials = document.querySelector("#initials");
+var viewHighscores = document.querySelector("#highscore");
+var submitButton = document.querySelector("#submitButton");
 var successMessage = document.querySelector("#success");
 var failMessage = document.querySelector("#fail");
 var currentQuestion = 0; //Pointer to current question
@@ -23,41 +30,41 @@ var questionsAndAnswers = [
   question3 = ['A very useful tool used during development and debugging for printing content to the debugger is:', 'Javascript', 'Terminal/Bash', 'For loops', 'console.log'],
   question4 = ['The condition in an If/Else statement is enclosed with:', 'Quotes', 'Curly Brackets', 'Parenthesis', 'Square Brackets']
 ];
-var answerSheet = {
-  question0: 3,
-  question1: 4,
-  question2: 3,
-  question3: 4,
-  question4: 3
-}
+var answerSheet = [3,4,3,4,3];
 
 //EVENT LISTENERS
-startBtn.addEventListener("click", startQuiz());
-cardAnswer1.addEventListener("click", validateAnswer(1));
-cardAnswer2.addEventListener("click", validateAnswer(2));
-cardAnswer3.addEventListener("click", validateAnswer(3));
-cardAnswer4.addEventListener("click", validateAnswer(4));
+startBtn.addEventListener("click", startQuiz);
+cardAnswer1.addEventListener("click", validateAnswer);
+cardAnswer2.addEventListener("click", validateAnswer);
+cardAnswer3.addEventListener("click", validateAnswer);
+cardAnswer4.addEventListener("click", validateAnswer);
+submitButton.addEventListener("click", addHighscore);
+viewHighscores.addEventListener("click", highscorePage);
+restart.addEventListener("click", reset);
+clearHighscores.addEventListener("click", clearHighscore);
 
 //FUNCTIONS
 //Start timer on Start click & move to next card
+
 function startQuiz() {
   cardPrompt.style.display = "none";
   startBtn.style.display = "none";
   askAQuestion();
-  setInterval(function() {
+  const timerInterval = setInterval(function() {
     timer--;
     if (!questionValidation) {
       timer = timer - 10;
       questionValidation = true;
     }
     if (timer <= 0) {
-      //GOTO FINISH PAGE
+      clearInterval(timerInterval);
+      generateFinalScreen();
     }
     cardTimer.innerHTML = "Time: " + timer;
   }, 1000);
 };
 
-function askAQuestion () {
+function askAQuestion() {
   cardQuestion.innerHTML = questionsAndAnswers[currentQuestion][0];
   cardAnswer1.innerHTML = questionsAndAnswers[currentQuestion][1];
   cardAnswer2.innerHTML = questionsAndAnswers[currentQuestion][2];
@@ -65,33 +72,71 @@ function askAQuestion () {
   cardAnswer4.innerHTML = questionsAndAnswers[currentQuestion][4];
 
   cardAnswers.forEach(element => {
-    element.style.display = "initial";
+    element.style.display = "block";
   });
-}
+};
 
-function validateAnswer(answer) {
-  if (answerSheet[currentQuestion] == answer) {
+function validateAnswer(evt) {
+  var answerIndex = evt.target.id.substring(6);
+
+  if (answerSheet[currentQuestion] == answerIndex) {
     failMessage.style.display = "none";
-    successMessage.style.display = "initial";
+    successMessage.style.display = "block";
   } else {
     successMessage.style.display = "none";
-    failMessage.style.display = "initial";
-  }
+    failMessage.style.display = "block";
+    timer = timer - 10;
+  };
   currentQuestion++;
-  if(currentQuestion < questionsAndAnswers.length()) {
+  if(currentQuestion < questionsAndAnswers.length) {
     askAQuestion();
   } else {
-    //GOTO FINISH PAGE
+    generateFinalScreen();
   }
+};
+
+function generateFinalScreen() {
+  score = timer;
+  cardAnswers.forEach(element => {
+    element.style.display = "none";
+  });
+  cardTimer.style.display = "none";
+  cardQuestion.innerHTML = "All done!";
+  cardPrompt.innerHTML = "Your final score is: " + score;
+  cardPrompt.style.display = "block";
+  enterInitials.style.display = "block";
 }
-//Create 5 Question Cards
 
-//Create Logic to keep track of what question you are on
+function addHighscore() {
+  localStorage.setItem("1", initials.value + ' - ' + score);
+  highscorePage();
+}
 
-//Create Finish screen displaying score and asking for initials
+function clearHighscore(){
+  localStorage.clear();
+  highscorePage();
+}
 
-//Create Validation to check answer
-  //Create Map of Questions and Answers
+function highscorePage() {
+  startBtn.style.display = "none";
+  cardAnswers.forEach(element => {
+    element.style.display = "none";
+  });
+  cardQuestion.innerHTML = "High scores";
+  cardPrompt.innerHTML = localStorage.getItem(1);
+  cardPrompt.style.display = "block";
+  enterInitials.style.display = "none";
+  restart.style.display = "block";
+  clearHighscores.style.display = "block";
 
-//Create HighScore Card and Logic
-  //log high score even after refresh
+};
+
+function reset() {
+  clearHighscores.style.display = "none";
+  restart.style.display = "none";
+  failMessage.style.display = "none";
+  successMessage.style.display = "none";
+  currentQuestion = 0;
+  timer = 100;
+  startQuiz();
+}
