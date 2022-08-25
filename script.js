@@ -138,5 +138,6 @@ function reset() {
   successMessage.style.display = "none";
   currentQuestion = 0;
   timer = 100;
+  cardTimer.style.display = "block";
   startQuiz();
 }
